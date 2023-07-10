@@ -1,0 +1,64 @@
+<!-- cadastrar_disciplinas.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Turmas</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Professor</th>
+                <th>Período</th>
+                <th>Horário</th>
+                <th>Local</th>
+                <th>Código da Disciplina</th>
+                <th>Código do Departamento</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for turma in turmas %}
+                <tr>
+                    <td>{{ turma.professor }}</td>
+                    <td>{{ turma.periodo }}</td>
+                    <td>{{ turma.horario }}</td>
+                    <td>{{ turma.local }}</td>
+                    <td>{{ turma.cod_disciplina }}</td>
+                    <td>{{ turma.cod_departamento }}</td>
+                    <td>
+                        <a href="/turmas/{{ turma.id }}" class="btn btn-primary">Avaliar</a>
+                    </td>
+                    {% if user.is_admin %}
+                    <td>
+                    <form action="remover-turma/{{turma.id}}" method="POST">
+                        <input type="hidden" name="turma_id" value="">
+                        <button type="submit" class="btn btn-danger">Remover turma</button>
+                    </form>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Melhores Avaliações</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Professor</th>
+                <th>Disciplina</th>
+                <th>Código da disciplina</th>
+                <th>Média da Avaliação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avaliacao in melhores_turmas %}
+                <tr>
+                    <td>{{ avaliacao[0]}}</td>
+                    <td>{{ avaliacao[1] }}</td>
+                    <td>{{ avaliacao[3] }}</td>
+                    <td>{{ avaliacao[2] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

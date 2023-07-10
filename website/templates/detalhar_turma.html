@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ turma.disciplina }}</h2>
+                        <p class="card-text">Professor: {{ turma.professor }}</p>
+                        <p class="card-text">Período: {{ turma.periodo }}</p>
+                        <p class="card-text">Horário: {{ turma.horario }}</p>
+                        <p class="card-text">Local: {{ turma.local }}</p>
+                        <p class="card-text">Código da Disciplina: {{ turma.cod_disciplina }}</p>
+                        <p class="card-text">Código do Departamento: {{ turma.cod_departamento }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Avaliação da Disciplina</h2>
+                        <form action="/turmas/{{ turma.id }}" method="POST">
+                            <div class="form-group">
+                                <label for="nota">Nota:</label>
+                                <input type="number" class="form-control" id="nota" name="nota" required min="1" max="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="comentario">Comentário:</label>
+                                <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Avaliação</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if avaliacoes %}
+        <hr>
+        <h2>Comentários</h2>
+        {% for avaliacao in avaliacoes %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ avaliacao.Nome_estudante }} {{avaliacao.matricula}}</h5>
+                    <p class="card-text">Nota: {{ avaliacao.Nota }}</p>
+                    <p class="card-text">{{ avaliacao.Comentario }}</p>
+                    <form action="/denunciar/{{avaliacao.Estudante_ID}}/avaliacao/{{avaliacao.ID}}" method="POST">
+                        <input type="hidden" name="avaliacao_id" value="{{ avaliacao.ID }}">
+                        <input type="hidden" name="avaliacao_id" value="{{ avaliacao.Estudante_ID }}">
+                        <button type="submit" class="btn btn-danger">Denunciar</button>
+                    </form>
+                    {% if user.ID == avaliacao.estudante_ID %}
+                    <a href="/detalhar-avaliacao/{{avaliacao.ID}}">Editar avaliacao</a>
+                    <!-- <form action="/editar-avaliacao/" method="POST">
+                        <input type="hidden" name="comentario" value="{{ avaliacao}}">
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                    </form> -->
+                    {%endif%}
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <br><br>
+        <H3>Não há avaliações disponíveis.</H3>
+    {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!-- cadastrar_disciplinas.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Denuncias</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID do Estudante</th>
+                <th>Comentario</th>
+                <th>Nome do Aluno</th>
+                <th>Matricula</th>
+                <th>Numero de denuncias</th>
+            </tr>
+        </thead>
+        {% if denuncias %}
+        <tbody>
+            {% for denuncia in denuncias %}
+                <tr>
+                    <td>{{ denuncia.Estudante_ID}}</td>
+                    <td>{{ denuncia.Comentario }}</td>
+                    <td>{{ denuncia.Nome }}</td>
+                    <td>{{ denuncia.Matricula }}</td>
+                    <td>{{ denuncia.Ocorrencias }}</td>
+                    
+                    <td>
+                    <form action="remover-comentario/{{denuncia.Comentario_ID}}" method="POST">
+                        <input type="hidden" name="avaliacao_id" value="">
+                        <input type="hidden" name="avaliacao_id" value="">
+                        <button type="submit" class="btn btn-danger">Remover comentario</button>
+                    </form>
+                    </td>
+                </tr>
+                
+            {% endfor %}
+        </tbody>
+        {% else %}
+        <br><br>
+        <H3>Não há denuncias no momento.</H3>
+    {% endif %}
+    </table>
+{% endblock %}

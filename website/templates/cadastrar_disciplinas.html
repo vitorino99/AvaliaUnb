@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Cadastro de Disciplinas{% endblock %}
+
+{% block content %}
+  <h1>Cadastro de Disciplinas</h1>
+  <form action="/cadastrar-disciplina" method="POST">
+    <div class="form-group">
+      <label for="cod_disciplina">Codigo da disciplina:</label>
+      <input type="text" class="form-control" id="cod_disciplina" name="cod_disciplina" required>
+    </div>
+    <div class="form-group">
+      <label for="nome_disciplina">Nome da Disciplina:</label>
+      <input type="text" class="form-control" id="nome_disciplina" name="nome_disciplina" required>
+    </div>
+    <div class="form-group">
+      <label for="nome_departamento">Nome do Departamento:</label>
+      <input type="text" class="form-control" id="nome_departamento" name="nome_departamento" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+{% endblock %}

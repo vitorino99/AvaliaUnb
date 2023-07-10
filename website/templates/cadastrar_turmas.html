@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Cadastro de Disciplinas{% endblock %}
+
+{% block content %}
+  <h1>Cadastro de Turmas</h1>
+  <form action="/cadastrar-turmas" method="POST">
+    <div class="form-group">
+      <label for="periodo">Periodo:</label>
+      <input type="text" class="form-control" id="periodo" name="periodo" required>
+    </div>
+    <div class="form-group">
+      <label for="professor">Nome do Professor:</label>
+      <input type="text" class="form-control" id="professor" name="professor" required>
+    </div>
+    <div class="form-group">
+      <label for="horario">Horario:</label>
+      <input type="text" class="form-control" id="horario" name="horario" required>
+    </div>
+    <div class="form-group">
+        <label for="local">Local:</label>
+        <input type="text" class="form-control" id="local" name="local" required>
+      </div>
+      <div class="form-group">
+        <label for="cod_disciplina">Codigo da disciplina:</label>
+        <input type="text" class="form-control" id="cod_disciplina" name="cod_disciplina" required>
+      </div>
+      <div class="form-group">
+        <label for="departamento">Departamento:</label>
+        <input type="text" class="form-control" id="departamento" name="departamento" required>
+      </div>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+{% endblock %}

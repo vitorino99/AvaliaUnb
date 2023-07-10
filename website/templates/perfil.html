@@ -1,0 +1,39 @@
+<!-- perfil_usuario.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Perfil do Usuário</h2>
+                <div class="profile-picture">
+                    {% if user.foto %}
+                        <img src="data:image/jpeg;base64,{{ user.foto }}" alt="Foto de Perfil">
+                    {% else %}
+                        <p>Nenhuma foto de perfil disponível.</p>
+                    {% endif %}
+                </div>
+                <form action="/atualizar_perfil" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="foto_perfil">Atualizar Foto de Perfil:</label>
+                        <input type="file" class="form-control-file" id="foto_perfil" name="foto_perfil">
+                    </div>
+                    <p><strong>Nome:</strong> {{ user.nome }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Matricula:</strong> {{ user.matricula }}</p>
+                    <p><strong>Curso:</strong> {{ user.curso }}</p>
+                    <p><strong>Endereco:</strong> {{ user.endereco }}</p>
+                    <!-- Exibição da foto de perfil -->
+                    <!-- Botão para atualizar a foto de perfil -->
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                </form>
+
+                <form action="/deletar-conta/{{user.id}}" method="POST" enctype="multipart/form-data">
+                    <!-- Exibição da foto de perfil -->
+                    <!-- Botão para atualizar a foto de perfil -->
+                    <button type="submit" class="btn btn-danger">Deleter perfil</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

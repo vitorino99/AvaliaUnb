@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Cadastro de Disciplinas{% endblock %}
+
+{% block content %}
+  <h1>Atualizar Comentario</h1>
+  <form action="/detalhar-avaliacao/{{id_avaliacao}}" method="POST">
+    <div class="form-group">
+        <label for="email">Nota:</label>
+        <input type="number" class="form-control" id="nota" name="nota" required min="1" max="5">
+      </div>
+      <div class="form-group">
+        <label for="departamento">Comentario:</label>
+        <textarea class="form-control" id="comentario" name="comentario" rows="4" required></textarea>
+      </div>
+      <input type="hidden" name="id_avaliacao" value="id_avaliacao">
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+  </form>
+{% endblock %}

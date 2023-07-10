@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Perfil</h1>
+      <a href="/perfil" class="btn btn-primary">Ver perfil</a>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Avaliar</h1>
+      <a href="/turmas" class="btn btn-primary">Avaliar professores</a>
+    </div>
+  </div>
+  <br><br>
+  {% if user.is_admin %}
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Cadastrar disciplina</h1>
+      <a href="/cadastrar-disciplina" class="btn btn-primary">Cadastrar disciplina</a>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Cadastrar professores</h1>
+      <a href="/cadastrar-professores" class="btn btn-primary">Cadastrar disciplina</a>
+    </div>
+  </div>
+<br><br>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Denuncias</h1>
+      <a href="/denuncias" class="btn btn-primary">Denuncias</a>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Cadastrar turmas</h1>
+      <a href="/cadastrar-turmas" class="btn btn-primary">Cadastrar turmas</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
