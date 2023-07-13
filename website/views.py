@@ -1,18 +1,15 @@
 import os
-from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
-from flask_login import login_user, login_required, logout_user, current_user
-from disciplina import DisicplinaDAO
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import login_required, logout_user, current_user
+from disciplina import DisciplinaDAO
 from turmas import TurmasDAO
 from avaliacoes import AvaliacoesDAO
 from denuncias import DenunciasDAO
-from werkzeug.utils import secure_filename
 from estudantes import EstudanteDAO
 from departamento import DepartamentoDAO
 from professores import ProfessoresDAO
 import base64
-from PIL import Image
-from io import BytesIO
-from website.auth import signup
+
 
 views = Blueprint("views", __name__)
 
@@ -32,7 +29,7 @@ def cadastrar_disciplina():
         cod_disciplina = request.form.get("cod_disciplina")
         nome_disciplina = request.form.get('nome_disciplina')
         nome_departamento = request.form.get('nome_departamento')
-        DisicplinaDAO.cadastrar(cod_disciplina, nome_disciplina,nome_departamento)
+        DisciplinaDAO.cadastrar(cod_disciplina, nome_disciplina,nome_departamento)
         flash("Disciplina cadastrada", category="success")
         
     return render_template('cadastrar_disciplinas.html', user=current_user)
@@ -117,7 +114,7 @@ def denunciar_avaliacao(Estudante_ID, ID):
             DenunciasDAO.denunciar(id_avaliacao, estudante_id)
         else:
             ID = denuncia[0]
-            ocorrencias = denuncia[4]
+            ocorrencias = denuncia[3]
             ocorrencias += 1
             if denuncia[1] == current_user.id:
                 flash("Você já realizou uma denuncia", category="error")
@@ -166,18 +163,7 @@ def detalhar_avaliacao(id_avaliacao):
             AvaliacoesDAO.editar_comentario(id_avaliacao,nota, comentario)
             flash("Comentario editado", category="success")
             return redirect(request.referrer or url_for('views.home'))
-            
-# @login_required
-# @views.route('editar-avaliacao/', methods=["POST"])
-# def editar_avaliacao(avaliacao):
-#     if current_user.is_admin == False:
-#         flash("Esse recurso está acessivel apenas para administradores", category="error")
-#     if avaliacao.Estudante_ID != current_user.id:
-#         flash("Você não está autorizado a realizar esse recurso", category="error")
-#     elif request.method == 'POST':
-#         flash("Denuncia feita", category="success")
-#         # DenunciasDAO.remover_avaliacao()
-#     return redirect(request.referrer or url_for('views.home'))  
+             
 
 @login_required
 @views.route('remover-turma/<int:id_turma>', methods=["POST"])

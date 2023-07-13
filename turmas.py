@@ -1,7 +1,7 @@
 import MySQLdb
 from flask import flash
 from flask_login import UserMixin
-from sqlalchemy.sql import func
+from database import execute_query
 
 
 class Turmas(UserMixin):
@@ -22,44 +22,33 @@ class TurmasDAO:
    
     def cadastrar(periodo, professor, horario, local, cod_disciplina, nome_departamento):                    
             # Conecte-se ao banco de dados
-            db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-            cursor = db.cursor()
                     
             # Execute a consulta SQL para inserir os dados na tabela de estudantes
                     
             query0 = "SELECT cod FROM departamentos WHERE Nome = %s" 
             values = (nome_departamento,)
             
-            cursor.execute(query0,values,)
+            cursor = execute_query(query0, values)
+
             
             result = cursor.fetchone()
            
                    
             query = "INSERT INTO turmas (periodo, professor, horario, local, cod_disciplina, cod_departamento) VALUES (%s, %s, %s, %s, %s, %s)"
             values = (periodo, professor, horario, local, cod_disciplina, result[0])
-            cursor.execute(query, values)
+            execute_query(query, values)
                     
-            # Confirme as alterações no banco de dados
-            db.commit()
-                    
-            # Feche a conexão com o banco de dados
-            db.close()   
+            # Confirme as alterações no banco de dados 
    
     def listar_todas():
             
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
-                    
         # Execute a consulta SQL para inserir os dados na tabela de estudantes
                 
                 
         query = "SELECT * FROM turmas"
-        cursor.execute(query)
-        # Obtenha o resultado da consulta
-        result = cursor.fetchall()
+        cursor = execute_query(query)
+        result = cursor.fetchall() 
                     
-        # Feche a conexão com o banco de dados
-        db.close()
                 
         # Defina as descrições das colunas
         estudantes = []
@@ -71,22 +60,14 @@ class TurmasDAO:
         else:
             return None
 
-    def buscar(id_turma):
-            
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
-                    
+    def buscar(id_turma):        
         # Execute a consulta SQL para inserir os dados na tabela de estudantes
                 
                 
         query = "SELECT * FROM turmas WHERE ID = %s "
         values = (id_turma,)
-        cursor.execute(query, values)
-        # Obtenha o resultado da consulta
-        result = cursor.fetchone()
-                    
-        # Feche a conexão com o banco de dados
-        db.close()
+        cursor = execute_query(query, values)
+        result = cursor.fetchone() 
                 
         # Defina as descrições das colunas
         if result:
@@ -97,20 +78,11 @@ class TurmasDAO:
 
             
     def listar_avalicacoes(id_turma):
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
-                    
-        # Execute a consulta SQL para inserir os dados na tabela de estudantes
-                
                 
         query = "SELECT * FROM avaliacoes WHERE Turma_ID = %s" 
         values = (id_turma,)
-        cursor.execute(query, values)
-        # Obtenha o resultado da consulta
-        result = cursor.fetchall()
-                    
-        # Feche a conexão com o banco de dados
-        db.close()
+        cursor = execute_query(query, values)
+        result = cursor.fetchall() 
                 
         # Defina as descrições das colunas
         estudantes = []
@@ -123,34 +95,20 @@ class TurmasDAO:
             return None
         
     def melhores_avaliacoes():
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
+
                     
         # Execute a consulta SQL para inserir os dados na tabela de estudantes
                 
                 
         query = "SELECT * FROM MaioresAvaliacoes" 
-        cursor.execute(query)
-        # Obtenha o resultado da consulta
-        result = cursor.fetchall()
-                    
-        # Feche a conexão com o banco de dados
-        db.close()
+        cursor = execute_query(query)
+        result = cursor.fetchall() 
                 
         # Defina as descrições das colunas
         return result
         
 
     def remover_turma(turma_id):
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
-
         query = "DELETE FROM turmas where ID = %s"
         values = (turma_id,)
-        cursor.execute(query, values)
-        
-
-        db.commit()
-
-        cursor.close()
-        db.close()
+        execute_query(query, values)

@@ -50,7 +50,8 @@
                         <input type="hidden" name="avaliacao_id" value="{{ avaliacao.Estudante_ID }}">
                         <button type="submit" class="btn btn-danger">Denunciar</button>
                     </form>
-                    {% if user.ID == avaliacao.estudante_ID %}
+                    <br><br>
+                    {% if user.id == avaliacao.Estudante_ID %}
                     <a href="/detalhar-avaliacao/{{avaliacao.ID}}">Editar avaliacao</a>
                     <!-- <form action="/editar-avaliacao/" method="POST">
                         <input type="hidden" name="comentario" value="{{ avaliacao}}">

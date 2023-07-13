@@ -2,6 +2,7 @@ import MySQLdb
 from flask import flash
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from database import execute_query
 
 
 class Denuncias(UserMixin):
@@ -19,37 +20,19 @@ class DenunciasDAO:
         pass
     
     def denunciar(avaliacao_id, estudante_id):
-            # Conecte-se ao banco de dados
-            db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-            cursor = db.cursor()
-                    
-            # Execute a consulta SQL para inserir os dados na tabela de estudantes
-                    
+                        
             query = "INSERT INTO denuncias(avaliacao_ID, Estudante_ID, ocorrencias) VALUES (%s, %s,%s)"
             values = (avaliacao_id,estudante_id,1)
-            cursor.execute(query, values)
-                    
-            # Confirme as alterações no banco de dados
-            db.commit()
-                    
-            # Feche a conexão com o banco de dados
-            db.close()
+            execute_query(query, values)
 
             
-    def listar_denuncias():
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
-                    
+    def listar_denuncias():                    
         # Execute a consulta SQL para inserir os dados na tabela de estudantes
                 
                 
         query = "SELECT DISTINCT d.ID, d.Estudante_ID ,a.Comentario, e.Nome, e.matricula, a.ID as Comentario_ID, d.ocorrencias FROM denuncias d JOIN avaliacoes a ON d.avaliacao_ID = a.ID JOIN estudantes e ON a.Estudante_ID = e.ID;"
-        cursor.execute(query)
-        # Obtenha o resultado da consulta
-        result = cursor.fetchall()
-                    
-        # Feche a conexão com o banco de dados
-        db.close()
+        cursor = execute_query(query)
+        result = cursor.fetchall() 
                 
         # Defina as descrições das colunas
         denuncias = []
@@ -79,21 +62,14 @@ class DenunciasDAO:
 
     def buscar_denuncia(id):
             
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
-                    
-        # Execute a consulta SQL para inserir os dados na tabela de estudantes
                 
                 
-        query = "SELECT DISTINCT d.ID, d.Estudante_ID, d.Professor_ID, d.avaliacao_ID, d.ocorrencias FROM denuncias d JOIN avaliacoes a ON d.avaliacao_ID = a.ID WHERE a.ID = %s"
+        query = "SELECT DISTINCT d.ID, d.Estudante_ID, d.avaliacao_ID, d.ocorrencias FROM denuncias d JOIN avaliacoes a ON d.avaliacao_ID = a.ID WHERE a.ID = %s"
         values = (id,)  # Adicione uma vírgula para criar uma tupla
-        cursor.execute(query, values)
-
-        # Obtenha o resultado da consulta
+        cursor = execute_query(query, values)
         result = cursor.fetchone()
                     
         # Feche a conexão com o banco de dados
-        db.close()
                 
         # Defina as descrições das colunas
         if result:
@@ -103,15 +79,9 @@ class DenunciasDAO:
 
     def atualizar(ocorrencias, id):
         # Converter a imagem para base64
-        db = MySQLdb.connect(host="localhost", user="root", passwd="12345", db="avalia_unb")
-        cursor = db.cursor()
-        
-
-
         # Executar a consulta SQL para inserir a imagem na tabela
         query = "UPDATE denuncias SET ocorrencias = %s WHERE ID = %s"
         values = (ocorrencias, id)
 
-        cursor.execute(query, values)
-        db.commit()
+        execute_query(query, values)
         
