@@ -3,12 +3,15 @@
 ## Aviso
 Para o desenvolvimento dessa aplicação utilizamos flask e mysql
 
-## Passo 1: Configurar o ambiente
+
 ### Python
 Para rodar a aplicação é necessário ter instalado em sua máquina a linguagem Python. No implementação da aplicação utilizei a versão 3.11.0
 
 ### MySQL
 Para rodar a aplicação é necessario ter instalado MySQL. No meu caso utilizei o MySQL Workbench pelo fato de ser mais simples.
+
+### Ciração do banco
+O SQL para a criação das tabelas e as inserções de querys nas tabelas estão na pasta arquivos_sql no diretorio do projeto.
 
 ### Instalar dependencias
 
