@@ -72,8 +72,16 @@ class EstudanteDAO:
         execute_query(query, values) 
 
     def remover_estudante(estudante_id):
-        query = "DELETE FROM estudantes where ID = %s"
         values = (estudante_id,)
+        
+        query1 = "DELETE FROM denuncias WHERE Estudante_ID = %s"
+        execute_query(query1, values)        
+        
+        query0 = "DELETE FROM avaliacoes WHERE Estudante_ID = %s"
+        execute_query(query0, values)
+    
+        
+        query = "DELETE FROM estudantes where ID = %s"
         execute_query(query, values)
 
 
