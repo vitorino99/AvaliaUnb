@@ -39,6 +39,7 @@ CREATE TABLE `turmas` (
   CONSTRAINT `turmas_ibfk_2` FOREIGN KEY (`cod_departamento`) REFERENCES `departamentos` (`cod`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
 CREATE TABLE `estudantes` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Nome` varchar(255) DEFAULT NULL,
@@ -63,7 +64,7 @@ CREATE TABLE `avaliacoes` (
   KEY `Estudante_ID` (`Estudante_ID`),
   KEY `Turma_ID` (`Turma_ID`),
   CONSTRAINT `avaliacoes_ibfk_1` FOREIGN KEY (`Estudante_ID`) REFERENCES `estudantes` (`ID`),
-  CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`Turma_ID`) REFERENCES `turmas` (`ID`)
+  CONSTRAINT `avaliacoes_ibfk_2` FOREIGN KEY (`Turma_ID`) REFERENCES `turmas` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -76,7 +77,7 @@ CREATE TABLE `denuncias` (
   KEY `Estudante_ID` (`Estudante_ID`),
   KEY `fk_avaliacao_denuncia` (`avaliacao_ID`),
   CONSTRAINT `denuncias_ibfk_1` FOREIGN KEY (`Estudante_ID`) REFERENCES `estudantes` (`ID`),
-  CONSTRAINT `fk_avaliacao_denuncia` FOREIGN KEY (`avaliacao_ID`) REFERENCES `avaliacoes` (`ID`)
+  CONSTRAINT `fk_avaliacao_denuncia` FOREIGN KEY (`avaliacao_ID`) REFERENCES `avaliacoes` (`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 

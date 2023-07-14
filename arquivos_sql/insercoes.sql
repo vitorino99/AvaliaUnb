@@ -25,9 +25,9 @@ INSERT INTO `estudantes` (`ID`, `Nome`, `Endereco`, `Email`, `Senha`, `matricula
 (3, 'Pedro Santos', 'Rua C, 789', 'pedro.santos@example.com', 'senha789', '20230003', 'Direito', 1);
 
 INSERT INTO `avaliacoes` (`ID`, `Estudante_ID`, `Turma_ID`, `Nota`, `Comentario`) VALUES
-(1, 1, 1, 9.5, 'Ótima aula!'),
-(2, 2, 2, 7.8, 'Interessante, mas difícil'),
-(3, 3, 3, 8.2, 'Professor atencioso');
+(1, 1, 1, 5, 'Ótima aula!'),
+(2, 2, 2, 4, 'Interessante, mas difícil'),
+(3, 3, 3, 3.5, 'Professor atencioso');
 
 
 INSERT INTO `denuncias` (`Estudante_ID`, `avaliacao_ID`, `ocorrencias`) VALUES
