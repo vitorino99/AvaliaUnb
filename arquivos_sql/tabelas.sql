@@ -80,3 +80,16 @@ CREATE TABLE `denuncias` (
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `maioresavaliacoes` AS select `t`.`professor` AS `professor`,`dis`.`Nome` AS `Nome`,avg(`a`.`Nota`) AS `media_avaliacao`,`t`.`cod_disciplina` AS `cod_disciplina` from ((`turmas` `t` left join `avaliacoes` `a` on((`t`.`ID` = `a`.`Turma_ID`))) left join `disciplinas` `dis` on((`t`.`cod_disciplina` = `dis`.`cod`))) group by `t`.`professor`,`dis`.`Nome`,`t`.`cod_disciplina` order by `media_avaliacao` desc limit 5;
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `apagar_comentario_denunciado`(IN p_comentario_id INT)
+BEGIN
+    -- Deletar a denúncia relacionada ao comentário
+    DELETE FROM denuncias WHERE avaliacao_ID = p_comentario_id;
+    
+    -- Deletar o comentário
+    DELETE FROM avaliacoes WHERE ID = p_comentario_id;
+END$$
+DELIMITER ;
